@@ -152,6 +152,327 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Wi-Fi帧类型与作用详解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Wi-Fi帧类型与作用详解"><a href="#Wi-Fi帧类型与作用详解" class="headerlink" title="Wi-Fi帧类型与作用详解"></a>Wi-Fi帧类型与作用详解</h3><table>
+<thead>
+<tr>
+<th align="left">帧类型&#x2F;子类型</th>
+<th align="left">过滤器语法</th>
+<th align="left">含义与作用</th>
+<th align="left">常见性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Management frame</strong>（管理帧）</td>
+<td align="left"><code>wlan.fc.type == 0</code></td>
+<td align="left"><strong>作用：</strong> 用于管理和维护STA（工作站）与AP（接入点）之间的通信关系。包括加入&#x2F;离开网络、身份认证、同步等。</td>
+<td align="left"><strong>极高</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- Association request（关联请求）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x00</code></td>
+<td align="left">由STA发送给AP，请求正式加入网络。</td>
+<td align="left"><strong>高</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- Association response（关联响应）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x01</code></td>
+<td align="left">由AP发送给STA，回应关联请求。</td>
+<td align="left"><strong>高</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- Reassociation request（重关联请求）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x02</code></td>
+<td align="left">STA在漫游时发送给新AP，请求切换关联。</td>
+<td align="left"><strong>高</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- Reassociation response（重关联响应）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x03</code></td>
+<td align="left">新AP对重关联请求的回应。</td>
+<td align="left"><strong>高</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- Probe request（探测请求）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x04</code></td>
+<td align="left">STA主动发送，用于“扫描”周围可用的Wi-Fi网络。</td>
+<td align="left"><strong>极高</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- Probe response（探测响应）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x05</code></td>
+<td align="left">AP对探测请求的回复，包含网络信息。</td>
+<td align="left"><strong>极高</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>Timing Advertisement</strong>（定时通告）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x06</code></td>
+<td align="left"><strong>补充：</strong> 用于 mesh 网络或定位服务中同步定时信息。</td>
+<td align="left"><strong>低</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>Beacon</strong>（信标帧）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x08</code></td>
+<td align="left">AP定期广播，宣告网络的存在。<strong>这是最重要的管理帧之一。</strong></td>
+<td align="left"><strong>极高</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>ATIM</strong>（通告传输指示消息）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x09</code></td>
+<td align="left"><strong>补充：</strong> 在IBSS（自组网&#x2F;Ad-hoc）模式中，用于通知有缓存的数据要发送。</td>
+<td align="left"><strong>低</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- Disassociation（解除关联）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x0A</code></td>
+<td align="left">由AP或STA发送，用于终止已建立的关联关系。</td>
+<td align="left"><strong>高</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- Authentication（认证）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x0B</code></td>
+<td align="left">STA和AP之间进行身份验证的交换过程。</td>
+<td align="left"><strong>高</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- Deauthentication（解除认证）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x0C</code></td>
+<td align="left">终止认证关系，迫使STA重新认证。常用于“取消认证攻击”。</td>
+<td align="left"><strong>高</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- Action（动作帧）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x0D</code></td>
+<td align="left">一个通用的管理帧，用于触发频谱管理、QoS、无线电测量等特定动作。</td>
+<td align="left"><strong>高</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>Action No Ack</strong>（无确认动作帧）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x0E</code></td>
+<td align="left"><strong>补充：</strong> 与Action帧相同，但不需要接收方回复确认（ACK）。</td>
+<td align="left"><strong>中</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>Control frame</strong>（控制帧）</td>
+<td align="left"><code>wlan.fc.type == 1</code></td>
+<td align="left"><strong>作用：</strong> 辅助数据帧的传输，用于控制无线介质访问、保证数据可靠性。</td>
+<td align="left"><strong>极高</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>Trigger</strong>（触发帧）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x02</code></td>
+<td align="left"><strong>补充 (Wi-Fi 6)：</strong> AP发送此帧调度多个STA同时上行传输（UL MU-MIMO&#x2F;OFDMA），是Wi-Fi 6的关键帧。</td>
+<td align="left"><strong>高 (Wi-Fi 6)</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>TACK</strong>（ beamforming 报告轮询）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x03</code></td>
+<td align="left"><strong>补充：</strong> 用于轮询beamforming测量报告，现已很少使用。</td>
+<td align="left"><strong>极低</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>Beamforming Report Poll</strong></td>
+<td align="left"><code>wlan.fc.type_subtype == 0x04</code></td>
+<td align="left"><strong>补充：</strong> 功能与TACK类似，已过时。</td>
+<td align="left"><strong>极低</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>VHT&#x2F;HE NDP Announcement</strong>（空数据包通告）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x05</code></td>
+<td align="left"><strong>补充：</strong> 在发送NDP（空数据包）用于信道测量前发送的通告。</td>
+<td align="left"><strong>中</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>Control Frame Extension</strong></td>
+<td align="left"><code>wlan.fc.type_subtype == 0x06</code></td>
+<td align="left"><strong>补充：</strong> 为未来控制帧扩展保留的子类型。</td>
+<td align="left"><strong>未使用</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>Control Wrapper</strong>（控制封装帧）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x07</code></td>
+<td align="left"><strong>补充：</strong> 可以携带其他控制帧或信息。</td>
+<td align="left"><strong>低</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>Block ACK Request</strong>（块确认请求）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x18</code></td>
+<td align="left">发送方向接收方请求一个块确认（Block ACK）。</td>
+<td align="left"><strong>高 (QoS)</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>Block ACK</strong>（块确认）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x19</code></td>
+<td align="left">接收方对块确认请求的响应，一次性确认一批数据帧。</td>
+<td align="left"><strong>高 (QoS)</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>PS-Poll</strong>（省电轮询）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x1A</code></td>
+<td align="left">处于省电模式的STA发送给AP，告知自己已唤醒并准备接收缓存的数据。</td>
+<td align="left"><strong>中</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>RTS</strong>（请求发送）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x1B</code></td>
+<td align="left">RTS&#x2F;CTS握手的第一步，发送方预约信道使用权。</td>
+<td align="left"><strong>中</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>CTS</strong>（清除发送）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x1C</code></td>
+<td align="left">RTS&#x2F;CTS握手的第二步，接收方回复CTS让周围设备静默。</td>
+<td align="left"><strong>中</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>ACK</strong>（确认）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x1D</code></td>
+<td align="left"><strong>最重要的控制帧。</strong> 接收方成功收到数据后立即回复ACK。</td>
+<td align="left"><strong>极高</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>CF-End</strong>（无竞争周期结束）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x1E</code></td>
+<td align="left">宣布无竞争传输阶段（CFP）结束。</td>
+<td align="left"><strong>低</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>CF-End + CF-Ack</strong></td>
+<td align="left"><code>wlan.fc.type_subtype == 0x1F</code></td>
+<td align="left"><strong>补充：</strong> 结合了CF-End和ACK功能的帧。</td>
+<td align="left"><strong>低</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>Data frame</strong>（数据帧）</td>
+<td align="left"><code>wlan.fc.type == 2</code></td>
+<td align="left"><strong>作用：</strong> <strong>传输上层协议数据（如IP包）的载体</strong>，是无线通信的最终目的。</td>
+<td align="left"><strong>极高</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>Data</strong>（数据）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x20</code></td>
+<td align="left"><strong>补充：</strong> 最基础的、不支持QoS的数据帧。</td>
+<td align="left"><strong>中 (旧设备)</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>Data + CF-Ack</strong></td>
+<td align="left"><code>wlan.fc.type_subtype == 0x21</code></td>
+<td align="left"><strong>补充：</strong> 在CFP期间，携带数据的同时对之前收到的帧进行确认。</td>
+<td align="left"><strong>极低</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>Data + CF-Poll</strong></td>
+<td align="left"><code>wlan.fc.type_subtype == 0x22</code></td>
+<td align="left"><strong>补充：</strong> AP在CFP期间使用，在发送数据的同时轮询STA。</td>
+<td align="left"><strong>极低</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>Data + CF-Ack + CF-Poll</strong></td>
+<td align="left"><code>wlan.fc.type_subtype == 0x23</code></td>
+<td align="left"><strong>补充：</strong> 结合了数据、确认和轮询三种功能。</td>
+<td align="left"><strong>极低</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>Null Data</strong>（空数据）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x24</code></td>
+<td align="left">不携带任何数据，用于向AP报告电源管理状态。</td>
+<td align="left"><strong>高</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>QoS Data</strong>（QoS数据）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x28</code></td>
+<td align="left"><strong>现代Wi-Fi中最常见的数据帧。</strong> 支持服务质量（QoS）优先级。</td>
+<td align="left"><strong>极高</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>QoS Data + CF-Ack</strong></td>
+<td align="left"><code>wlan.fc.type_subtype == 0x29</code></td>
+<td align="left">QoS Data的CFP变体。</td>
+<td align="left"><strong>极低</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>QoS Data + CF-Poll</strong></td>
+<td align="left"><code>wlan.fc.type_subtype == 0x2A</code></td>
+<td align="left">QoS Data的CFP变体。</td>
+<td align="left"><strong>极低</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>QoS Data + CF-Ack + CF-Poll</strong></td>
+<td align="left"><code>wlan.fc.type_subtype == 0x2B</code></td>
+<td align="left">QoS Data的CFP变体。</td>
+<td align="left"><strong>极低</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>QoS Null</strong>（空QoS数据）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x2C</code></td>
+<td align="left">不携带数据的QoS帧，用于报告QoS网络的电源状态。</td>
+<td align="left"><strong>高</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>QoS CF-Poll</strong>（无数据）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x2D</code></td>
+<td align="left"><strong>补充：</strong> 仅用于轮询，不携带数据。</td>
+<td align="left"><strong>低</strong></td>
+</tr>
+<tr>
+<td align="left">&nbsp;&nbsp;- <strong>QoS CF-Ack + CF-Poll</strong>（无数据）</td>
+<td align="left"><code>wlan.fc.type_subtype == 0x2E</code></td>
+<td align="left"><strong>补充：</strong> 仅用于确认和轮询，不携带数据。</td>
+<td align="left"><strong>低</strong></td>
+</tr>
+</tbody></table>
+<p><strong>总结说明：</strong></p>
+<ol>
+<li><strong>常见性</strong>：您原始列表中的帧覆盖了<strong>99%</strong> 的常见抓包场景。缺少的主要是一些<strong>已过时</strong>（如CFP相关帧）或<strong>为未来保留</strong>的帧。</li>
+<li><strong>重要补充</strong>：唯一一个常见且重要的补充是 <strong>Trigger帧</strong>，它是Wi-Fi 6（802.11ax）中实现高效上行多用户传输的核心机制。</li>
+<li><strong>扩展类型</strong>：<code>0x0E</code> (Action No Ack), <code>0x06</code> (Timing Advertisement) 等在特定网络或功能中会出现，但日常分析中不常见。</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2025/09/03/Wi-Fi%E5%B8%A7%E7%B1%BB%E5%9E%8B%E4%B8%8E%E4%BD%9C%E7%94%A8%E8%AF%A6%E8%A7%A3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-icmp_counter" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
