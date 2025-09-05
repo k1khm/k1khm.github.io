@@ -157,7 +157,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="NAT-Mode-with-Meraki-DHCP"><a href="#NAT-Mode-with-Meraki-DHCP" class="headerlink" title="NAT Mode with Meraki DHCP"></a>NAT Mode with Meraki DHCP</h1><p><a target="_blank" rel="noopener" href="https://documentation.meraki.com/MR/Client_Addressing_and_Bridging/SSID_Modes_for_Client_IP_Assignment">NAT mode with Meraki DHCP</a> allows an MR access point to provide client addressing by running its own DHCP server to simplify management, allow guest access, and provide client isolation functionality. </p>
+        <h1 id="NAT-Mode-with-Meraki-DHCP"><a href="#NAT-Mode-with-Meraki-DHCP" class="headerlink" title="NAT Mode with Meraki DHCP"></a><a target="_blank" rel="noopener" href="https://documentation.meraki.com/MR/Client_Addressing_and_Bridging/NAT_Mode_with_Meraki_DHCP">NAT Mode with Meraki DHCP</a></h1><p><a target="_blank" rel="noopener" href="https://documentation.meraki.com/MR/Client_Addressing_and_Bridging/SSID_Modes_for_Client_IP_Assignment">NAT mode with Meraki DHCP</a> allows an MR access point to provide client addressing by running its own DHCP server to simplify management, allow guest access, and provide client isolation functionality. </p>
 <h2 id="Client-Addressing-in-NAT-mode-with-Meraki-DHCP"><a href="#Client-Addressing-in-NAT-mode-with-Meraki-DHCP" class="headerlink" title="Client Addressing in NAT mode with Meraki DHCP"></a>Client Addressing in NAT mode with Meraki DHCP</h2><p>The DHCP server run by the Cisco Meraki AP provides addresses in the 10.0.0.0&#x2F;8 subnet (10.x.x.x). Outbound connections will be initiated with the LAN IP address of the AP using Network Address Translation. Wireless clients that connect to the network will be given the following configuration via Meraki DHCP:</p>
 <ul>
 <li>An IP address in the 10.0.0.0&#x2F;8 range. The IP address is created by running the client’s MAC address through a hashing algorithm.</li>
@@ -214,7 +214,29 @@
 <h2 id="Additional-Resources"><a href="#Additional-Resources" class="headerlink" title="Additional Resources"></a>Additional Resources</h2><p>For additional information about NAT mode with Meraki DHCP and client addressing, please consult the following documentation:</p>
 <p><a target="_blank" rel="noopener" href="https://documentation.meraki.com/MR/Client_Addressing_and_Bridging/SSID_Modes_for_Client_IP_Assignment#NAT_Mode">NAT Mode</a></p>
 <p><a target="_blank" rel="noopener" href="https://documentation.meraki.com/MR/Client_Addressing_and_Bridging/SSID_Modes_for_Client_IP_Assignment#Bridge_Mode">Bridge Mode</a></p>
-<p>1. </p>
+<h1 id="NAT-Gateway-Mode-SSID"><a href="#NAT-Gateway-Mode-SSID" class="headerlink" title="NAT Gateway Mode SSID"></a><a target="_blank" rel="noopener" href="https://tip-1.gitbook.io/openwifi/master/configuration-examples/nat-gateway-mode-ssid">NAT Gateway Mode SSID</a></h1><p>Configuring AP as a Gateway</p>
+<h3 id="Network-Address-Translation-Wi-Fi-to-Ethernet"><a href="#Network-Address-Translation-Wi-Fi-to-Ethernet" class="headerlink" title="Network Address Translation Wi-Fi to Ethernet"></a>Network Address Translation Wi-Fi to Ethernet</h3><p>When defining an SSID in NAT mode, this has the affect of isolating all SSID virtual interface traffic in Layer 2 and Layer 3 behind a NAT function inside the Access Point. </p>
+<p>The Access Point will use its ‘WAN’ interface as the public facing IP address for clients behind the SSID associated to NAT mode operation. </p>
+<p>NAT mode SSID will have a local DHCP service enabled by default with an address range of 192.168.1.0&#x2F;24 where the first address is used by the Access Point as the SSID NAT LAN interface serving as default gateway address to all associated UE clients. </p>
+<p>NAT SSID is configured within Profiles, SSID Profile:</p>
+<ul>
+<li>Create a Profile of type SSID</li>
+<li>Assign a Profile Name</li>
+<li>Create the SSID <ul>
+<li>Assign SSID Name</li>
+<li>Set related optional SSID parameters</li>
+</ul>
+</li>
+<li>Network Connectivity<ul>
+<li>Ensure Mode is set to NAT</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://tip-1.gitbook.io/openwifi/~gitbook/image?url=https://4234315876-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%252F-MMa5rA2dKyutvejS11x%252F-MZ9KDDWpWZbq8jS6aTQ%252F-MZ9LQMiBBHP2pqyOfiD%252FScreen%2520Shot%25202021-04-25%2520at%25202.45.19%2520PM.png?alt=media&token=09df2ab1-3bf2-42c6-8c37-8be6a25856b7&width=768&dpr=4&quality=100&sign=fca0cec5&sv=2" alt="img"></p>
+<p>SSID NAT Configuration</p>
+<p>Once the SSID Profile is associated to an Access Point, clients will receive DHCP, Routing, DNS from the Access Point ‘LAN’ side</p>
+<p><img src="https://tip-1.gitbook.io/openwifi/~gitbook/image?url=https://4234315876-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%252F-MMa5rA2dKyutvejS11x%252F-MZ9OsKNhHWOBw-FLIIS%252F-MZ9PtP7HkByGPmvmsri%252FScreen%2520Shot%25202021-04-25%2520at%25203.04.50%2520PM.png?alt=media&token=838cb012-0b23-4ba2-ba9a-1d0255d316af&width=768&dpr=4&quality=100&sign=d18ea76f&sv=2" alt="img"></p>
+<p>Client Served via NAT SSID</p>
 
       
 
