@@ -15,15 +15,15 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="NAT Mode with Meraki DHCPNAT mode with Meraki DHCP allows an MR access point to provide client addressing by running its own DHCP server to simplify management, allow guest access, and provide client">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/.%5Casset%5CExample_Topology.png">
+<meta property="og:image" content="http://example.com/asset/Example_Topology.png">
 <meta property="og:image" content="https://documentation.meraki.com/@api/deki/files/18900/NAT_mode.PNG?revision=1">
 <meta property="og:image" content="https://documentation.meraki.com/@api/deki/files/18900/NAT_mode.PNG?revision=1">
 <meta property="og:image" content="https://documentation.meraki.com/@api/deki/files/4145/Example_Topology_withWired.png?revision=2">
 <meta property="article:published_time" content="2025-09-05T17:06:05.656Z">
-<meta property="article:modified_time" content="2025-09-05T17:09:21.483Z">
+<meta property="article:modified_time" content="2025-09-05T17:12:33.709Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/.%5Casset%5CExample_Topology.png">
+<meta name="twitter:image" content="http://example.com/asset/Example_Topology.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -173,7 +173,7 @@
 <li>A Lease Time of 24 hours</li>
 </ul>
 <p>A wireless network using NAT Mode with Meraki DHCP can be seen below. When clients on the wireless network access resources upstream of the AP, their IP addresses will be translated to the IP address of the AP (192.168.1.1):</p>
-<p><img src="/.%5Casset%5CExample_Topology.png" alt="2 Clients with 10.x.x.x addresses wirelessly connected to the AP, which then gets NATed into the APs Management IP to the internet"></p>
+<p><img src="/./asset/Example_Topology.png" alt="2 Clients with 10.x.x.x addresses wirelessly connected to the AP, which then gets NATed into the APs Management IP to the internet"></p>
 <h2 id="Client-Isolation"><a href="#Client-Isolation" class="headerlink" title="Client Isolation"></a>Client Isolation</h2><p>NAT mode with Meraki DHCP isolates clients. Devices with a Meraki DHCP address will be able to access external and internal resources, such as the Internet and LAN (<a target="_blank" rel="noopener" href="https://documentation.meraki.com/MR/Firewall_and_Traffic_Shaping/'Deny_Local_LAN'_settings_in_Cisco_Meraki_MR_firewall">if firewall rules permit</a>). However, connected clients will be unable to contact each other. The client isolation features of Meraki DHCP can be seen in the above figure. Client A and Client B can both access the Internet. When Client A wants to send traffic to Client B, the traffic will reach the AP. However, the AP <strong>will not</strong> forward this traffic to Client B. Therefore, the two clients are isolated from each other.</p>
 <p>Since the client isolation function of NAT mode prevents wireless devices on the SSID from communicating with other wireless devices, NAT mode is not recommended for use with wireless peer-to-peer devices like a wireless printer or Google Chromecast.</p>
 <p>Due to the implementation of client isolation, clients on a NAT mode SSID cannot talk to clients on a bridge-mode SSID when both clients are connected to the same AP.</p>
